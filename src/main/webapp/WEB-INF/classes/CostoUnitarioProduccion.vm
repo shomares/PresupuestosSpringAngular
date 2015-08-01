@@ -1,0 +1,53 @@
+<p>Presupuesto Costo Unitario de Produccion</p>
+<table border="1">
+	<tr>
+		<th>Concepto</th> 
+		#foreach( $detalle in $presupuesto.detalle)
+			<th>$detalle.producto.nombre</th> 
+		#end
+	</tr>
+	<tr>
+		<td>Materia Prima Directa</td>
+		#foreach( $detalle in $presupuesto.detalle)
+			<td>$detalle.materiaPrimaDirecta</td> 
+		#end
+	</tr>
+	<tr>
+		
+		<td>Mano de Obra Directa</td>
+		#foreach( $detalle in $presupuesto.detalle)
+			<td>$detalle.manodeObraDirecta</td> 
+		#end
+	</tr>
+	<tr>
+		
+		<td>Cargos Indirectos</td>
+		#foreach( $detalle in $presupuesto.detalle)
+			<td>$detalle.cargosIndirectos</td> 
+		#end
+	</tr>
+	<tr>
+		<td>Suma</td>
+		#foreach( $detalle in $presupuesto.detalle)
+			<td>$detalle.suma</td> 
+		#end
+	</tr>
+	<tr>
+		<td>Unidades</td>
+		#foreach( $detalle in $presupuesto.detalle)
+			<td>$detalle.unidades</td> 
+		#end
+	</tr>
+	<tr>
+		<td>Costo Unitario</td>
+		#foreach( $detalle in $presupuesto.detalle)
+			<td>$detalle.costoUnitario</td> 
+		#end
+	</tr>
+	<tr>
+	   <td>Precio Venta</td>
+		#foreach( $detalle in $presupuesto.detalle  )
+			<td>$detalle.preciodeVenta</td> 
+		#end
+	</tr>
+</table>

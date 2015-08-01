@@ -1,0 +1,21 @@
+<p>Presupuesto Venta</p>
+
+
+<table border="1">
+	<tr>
+		<th>Producto</th>
+		<th>Unidades</th>
+		<th>Precio Unitario</th>
+		<th>Importe</th>
+	</tr>
+	#foreach($detalle in $presupuesto.lista)
+	<tr>
+		<td>$detalle.producto.nombre</td>
+		<td>$detalle.unidades</td>
+		<td>$detalle.precioUnitario</td>
+		<td>$detalle.importe</td>
+		
+	</tr>
+	#end
+</table>
+

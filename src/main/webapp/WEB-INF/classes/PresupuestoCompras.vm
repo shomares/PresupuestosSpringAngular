@@ -1,0 +1,51 @@
+<p>Presupuesto de Compras</p>
+<table border="1">
+	<tr>
+		<th>Concepto</th> 
+		#foreach( $materiaPrima in $presupuesto.lineas )
+			<th>$materiaPrima.nombre</th> 
+		#end
+	</tr>
+	<tr>
+		<td>Unidades a Consumir</td>
+		#foreach( $materiaPrima in $presupuesto.lineas )
+			<td>$materiaPrima.unidadesConsumir</td> 
+		#end
+	</tr>
+	<tr>
+		<td>Inventario Final Deseado</td>
+		#foreach( $materiaPrima in $presupuesto.lineas )
+			<td>$materiaPrima.inventarioFinalDeseado</td> 
+		#end
+	</tr>
+	<tr>
+		<td>Necesidad Total</td>
+		#foreach(  $materiaPrima in $presupuesto.lineas   )
+			<td>$materiaPrima.necesidadTotal</td> 
+		#end
+	</tr>
+	<tr>
+		<td>Inventario Inicial</td>
+		#foreach( $materiaPrima in $presupuesto.lineas    )
+			<td>$materiaPrima.inventarioInicial</td> 
+		#end
+	</tr>
+	<tr>
+		<td>Unidades a Comprar</td>
+		#foreach( $materiaPrima in $presupuesto.lineas    )
+			<td>$materiaPrima.unidadesaComprar</td> 
+		#end
+	</tr>
+	<tr>
+	    <td>Costo por Unidad</td>
+		#foreach( $materiaPrima in $presupuesto.lineas  )
+			<td>$materiaPrima.costoXUnidad</td> 
+		#end
+	</tr>
+	<tr>
+	   <td>Importe</td>
+		#foreach( $materiaPrima in $presupuesto.lineas  )
+			<td>$materiaPrima.importe</td> 
+		#end
+	</tr>
+</table>

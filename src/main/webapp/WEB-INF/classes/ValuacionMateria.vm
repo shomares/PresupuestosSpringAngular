@@ -1,0 +1,39 @@
+<p>Presupuesto de Valuacion de Materia Prima</p>
+
+#foreach( $consumoMateriaPrima in $presupuesto.valuaciones)
+	
+	<p>$consumoMateriaPrima.materiaPrima.nombre</p>
+<table border="1">
+	<tr>
+		<th>Producto</th>
+		<th>Mezcla</th> 
+		<th>Costo por Unidad</th> 
+		<th>Importe</th> 
+		<th>Importe Total</th> 
+		<th>Importe</th> 
+	</tr>
+	<tr>
+		#foreach( $consumo in $consumoMateriaPrima.productoValuacion)
+			<td>$consumo.producto.nombre</td>
+			<td>$consumo.unidadConsumidad</td> 
+			<td>
+				$consumo.mezclaInventarioInicial
+				<br>
+				$consumo.mezclaInventarioFinal
+			</td> 
+			<td>
+				$consumo.costoUnidadInicial
+				<br>
+				$consumo.costoUnidadFinal
+			</td>
+			<td>
+				$consumo.importeInicial
+				<br>
+				$consumo.importeFinal
+			</td>
+			<td>$consumo.importeTotal</td> 
+		#end
+	</tr>
+</table>
+#end
+

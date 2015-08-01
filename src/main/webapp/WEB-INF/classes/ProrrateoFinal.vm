@@ -1,0 +1,21 @@
+<p>Presupuesto de Cargos Indirectos</p>
+
+#foreach( $actividad in $presupuesto.lista)
+
+<p>$actividad.actividad.nombre</p>
+<table border="1">
+	<tr>
+		<th>Producto</th>
+		<th>Importe</th>
+		<th>Horas</th>
+	</tr>
+	#foreach( $producto in $actividad.prorrateoProducto)
+	<tr>
+		<td>$producto.producto.nombre</td>
+		<td>$producto.importe</td>
+		<td>$producto.horas</td>
+	</tr>
+	#end
+</table>
+#end
+

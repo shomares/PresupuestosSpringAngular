@@ -1,0 +1,25 @@
+<p>Presupuesto de Consumo de Materia Prima Por Unidades</p>
+
+#foreach( $consumoMateriaPrima in $presupuesto.fila)
+	
+<table border="1">
+
+	<tr>
+		<th>Producto</th>
+		<th>Unidades a Producir</th> 
+		#foreach( $consumo in $consumoMateriaPrima.consumos)
+			<th>Consumo por Unidad $consumo.materiaPrima.nombre</th>
+			<th>Unidades de Consumo $consumo.materiaPrima.nombre</th>
+		#end
+	</tr>
+	<tr>
+		<td>$consumoMateriaPrima.producto.nombre</td>
+		<td>$consumoMateriaPrima.unidadesAProducir</td> 
+		#foreach( $consumo in $consumoMateriaPrima.consumos)
+			<td>$consumo.consumoUnidades</td>
+			<td>$consumo.unidadesConsumo</td> 
+		#end
+	</tr>
+</table>
+#end
+

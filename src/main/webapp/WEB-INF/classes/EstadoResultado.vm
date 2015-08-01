@@ -1,0 +1,30 @@
+<p>Estado de Resultados</p>
+
+<table>
+	<tr>
+		<td>Ventas Netas</td>
+		<td>$presupuesto.ventas</td>
+	</tr>
+	<tr>
+		<td>Costo de ventas</td>
+		<td>$presupuesto.costoVentas</td>
+	</tr>
+	<tr>
+		<td>Gastos Operacion</td>
+		<td>$presupuesto.gastosOperacion</td>
+	</tr>
+	<tr>
+		<td>Utilidad Neta</td>
+		<td>$presupuesto.utantes</td>
+	</tr>
+
+	<tr>
+		<td>ISR</td>
+		<td>$presupuesto.isr</td>
+	</tr>
+	<tr>
+		<td>Utilidad del ejercicio</td>
+		<td>$presupuesto.utilidadEjercicio</td>
+	</tr>
+
+</table>

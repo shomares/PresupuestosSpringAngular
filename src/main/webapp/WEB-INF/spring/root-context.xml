@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+
+
+
+	<!-- MYSQL -->
+	<bean name="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/Presupuesto" />
+		<property name="username" value="$username" />
+		<property name="password" value="$password" />
+	</bean>
+
+	<!-- MYSQL -->
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="org.upiicsa.dao.entidades" />
+		<property name="hibernateProperties">
+			<map>
+				<entry key="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+				<entry key="hibernate.show_sql" value="true" />
+				<entry key="hibernate.hbm2ddl.auto" value="update" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="daoMateriaPrima" class="org.upiicsa.dao.Hibernate.DaoHibernate">
+		<constructor-arg>
+			<value type="java.lang.Class">org.upiicsa.dao.entidades.MateriaPrima</value>
+		</constructor-arg>
+		<property name="session" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="daoProducto" class="org.upiicsa.dao.Hibernate.DaoHibernate">
+		<constructor-arg>
+			<value type="java.lang.Class">org.upiicsa.dao.entidades.Producto</value>
+		</constructor-arg>
+		<property name="session" ref="sessionFactory"></property>
+	</bean>
+
+
+	<bean id="daoMateriaPrimaProducto" class="org.upiicsa.dao.Hibernate.DaoHibernate">
+		<constructor-arg>
+			<value type="java.lang.Class">org.upiicsa.dao.entidades.UsoMateriaPrima</value>
+		</constructor-arg>
+		<property name="session" ref="sessionFactory"></property>
+	</bean>
+
+
+	<bean id="daoActividad" class="org.upiicsa.dao.Hibernate.DaoHibernate">
+		<constructor-arg>
+			<value type="java.lang.Class">org.upiicsa.dao.entidades.Actividad</value>
+		</constructor-arg>
+		<property name="session" ref="sessionFactory"></property>
+	</bean>
+
+
+	<bean id="daoBalanceGeneral" class="org.upiicsa.dao.Hibernate.DaoHibernate">
+		<constructor-arg>
+			<value type="java.lang.Class">org.upiicsa.dao.entidades.BalanceGeneral</value>
+		</constructor-arg>
+		<property name="session" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="daoCostoActividad" class="org.upiicsa.dao.Hibernate.DaoHibernate">
+		<constructor-arg>
+			<value type="java.lang.Class">org.upiicsa.dao.entidades.CostoActividad</value>
+		</constructor-arg>
+		<property name="session" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="daoConfiguracion" class="org.upiicsa.dao.Hibernate.DaoHibernate">
+		<constructor-arg>
+			<value type="java.lang.Class">org.upiicsa.dao.entidades.Configuracion</value>
+		</constructor-arg>
+		<property name="session" ref="sessionFactory"></property>
+	</bean>
+
+
+	<bean id="daoUsoMateriaPrima" class="org.upiicsa.dao.Hibernate.DaoHibernate">
+		<constructor-arg>
+			<value type="java.lang.Class">org.upiicsa.dao.entidades.UsoMateriaPrima</value>
+		</constructor-arg>
+		<property name="session" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="daoHibernate" class="org.upiicsa.dao.Hibernate.DaoPresupuesto">
+		<property name="session" ref="sessionFactory"></property>
+	</bean>
+
+
+	<bean id="logicPresupuestoProduccion"
+		class="org.upiicsa.logica.Presupuesto.LogicPresupuestoProduccion"
+		scope="singleton">
+		<property name="daoProducto" ref="daoProducto"></property>
+		<property name="plantilla" value="PresupuestoProduccion.vm"></property>
+	</bean>
+
+	<bean id="logicPresupuestoConsumoMateriaPrima"
+		class="org.upiicsa.logica.Presupuesto.LogicPresupuestoConsumoMateriaPrima"
+		scope="singleton">
+		<property name="daoProducto" ref="daoProducto"></property>
+		<property name="daoPresupuesto" ref="daoHibernate"></property>
+		<property name="entrada" ref="logicPresupuestoProduccion"></property>
+		<property name="plantilla" value="PresupuestoConsumoMateriaPrima.vm"></property>
+	</bean>
+
+	<bean id="logicCompras" class="org.upiicsa.logica.Presupuesto.LogicPresupuestoCompras"
+		scope="singleton">
+		<property name="daoMateriaPrima" ref="daoMateriaPrima"></property>
+		<property name="consumoMateriaPrima" ref="logicPresupuestoConsumoMateriaPrima"></property>
+		<property name="plantilla" value="PresupuestoCompras.vm"></property>
+	</bean>
+	
+	<bean id="logicManoObra" class="org.upiicsa.logica.Presupuesto.LogicPresupuestoManoObra"
+		scope="singleton">
+		<property name="daoActividad" ref="daoActividad"></property>
+		<property name="daoProducto" ref="daoProducto"></property>
+		<property name="presupuestoProduccion" ref="logicPresupuestoProduccion"></property>
+		<property name="plantilla" value="PresupuestoManoObra.vm"></property>
+	</bean>
+
+	
+	<bean id="logicValuacionMateria" class="org.upiicsa.logica.Presupuesto.LogicValuacionMateria"
+		scope="singleton">
+		<property name="daoMateriaPrima" ref="daoMateriaPrima"></property>
+		<property name="consumoMateriaPrima" ref="logicPresupuestoConsumoMateriaPrima"></property>
+		<property name="plantilla" value="ValuacionMateria.vm"></property>
+	</bean>
+	
+	
+	
+	<bean id="logicSecundario"
+		class="org.upiicsa.logica.Presupuesto.LogicaProrrateoSecundario"
+		scope="singleton">
+		<property name="daoActividad" ref="daoActividad"></property>
+		<property name="daoConfiguracion" ref="daoConfiguracion"></property>
+	</bean>
+	
+	<bean id="logicProrrateoFinal" class="org.upiicsa.logica.Presupuesto.LogicProrrateoFinal"
+		scope="singleton">
+		<property name="daoActividad" ref="daoActividad"></property>
+		<property name="manoObra" ref="logicManoObra"></property>
+		<property name="prorrateoSecundario" ref="logicSecundario"></property>
+		<property name="plantilla" value="ProrrateoFinal.vm"></property>
+	</bean>
+
+	<bean id="logicCostoUnitarioProduccion"
+		class="org.upiicsa.logica.Presupuesto.LogicCostoUnitarioProduccion"
+		scope="singleton">
+		<property name="daoConfig" ref="daoConfiguracion"></property>
+		<property name="daoProducto" ref="daoProducto"></property>
+		<property name="manoObra" ref="logicManoObra"></property>
+		<property name="porrateoFinal" ref="logicProrrateoFinal"></property>
+		<property name="produccion" ref="logicPresupuestoProduccion"></property>
+		<property name="valuacionMateria" ref="logicValuacionMateria"></property>
+		<property name="plantilla" value="CostoUnitarioProduccion.vm"></property>
+	</bean>
+
+
+	<bean id="logicaPresupuestoVenta" class="org.upiicsa.logica.Presupuesto.LogicaPresupuestoVenta"
+		scope="singleton">
+		<property name="daoProducto" ref="daoProducto"></property>
+		<property name="costoUnitario" ref="logicCostoUnitarioProduccion"></property>
+
+		<property name="plantilla" value="PresupuestoVenta.vm"></property>
+	</bean>
+	
+	<bean id="LogicaCostoVendido" class="org.upiicsa.logica.Presupuesto.LogicaPresupuestoCostoVendido"
+		scope="singleton">
+			<property name="plantilla" value="PresupuestoCostoVendido.vm"></property>
+	</bean>
+
+
+	<bean id="LogicaEstadoResultados" class="org.upiicsa.logica.Presupuesto.LogicaEstadoResultados"
+		scope="singleton">
+		<property name="daoConfiguracion" ref="daoConfiguracion"></property>
+		<property name="costoVendido" ref="LogicaCostoVendido"></property>
+		<property name="ventas" ref="logicaPresupuestoVenta"></property>
+		<property name="plantilla" value="EstadoResultado.vm"></property>
+	</bean>
+
+
+
+	<bean id="logicaBalanceGeneral" class="org.upiicsa.logica.Presupuesto.LogicaBalanceGeneral"
+		scope="singleton">
+		<property name="daoBalanceGeneral" ref="daoBalanceGeneral"></property>
+		<property name="daoConfiguracion" ref="daoConfiguracion"></property>
+		<property name="daoMateriaPrima" ref="daoMateriaPrima"></property>
+		<property name="daoProduccto" ref="daoProducto"></property>
+		<property name="logicaEstadoResultados" ref="LogicaEstadoResultados"></property>
+		<property name="logicCostoUnitarioProduccion" ref="logicCostoUnitarioProduccion"></property>
+		<property name="logicPresupuestoCompras" ref="logicCompras"></property>
+		<property name="logicPresupuestoManoObra" ref="logicManoObra"></property>
+		<property name="logicProrrateoFinal" ref="logicProrrateoFinal"></property>
+		<property name="plantilla" value="BalanceGeneral.vm"></property>
+	</bean>	
+	<bean id="presupuesto" class="org.upiicsa.logica.Presupuesto.Presupuestos"
+		scope="singleton">
+		<property name="lista">
+			<list>
+				<ref bean="logicPresupuestoProduccion" />
+				<ref bean="logicPresupuestoConsumoMateriaPrima" />
+				<ref bean="logicCompras" />
+				<ref bean="logicManoObra" />
+				<ref bean="logicValuacionMateria" />
+				<ref bean="logicProrrateoFinal" />
+				<ref bean="logicCostoUnitarioProduccion" />
+				<ref bean="logicaPresupuestoVenta" />
+			
+				<ref bean="LogicaCostoVendido" />
+				<ref bean="LogicaEstadoResultados" />
+				<ref bean="logicaBalanceGeneral" />
+
+
+			</list>
+		</property>
+
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+
+
+</beans>

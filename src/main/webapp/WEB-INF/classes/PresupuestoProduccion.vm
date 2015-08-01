@@ -1,0 +1,39 @@
+<p>Presupuesto de Producccion</p>
+<table border="1">
+	<tr>
+		<th>Concepto</th> 
+		#foreach( $producto in $presupuesto.productos )
+			<th>$producto.producto.nombre</th> 
+		#end
+	</tr>
+	<tr>
+		<td>Unidades a Vender</td>
+		#foreach( $producto in $presupuesto.productos  )
+			<td>$producto.unidadesaAVender</td> 
+		#end
+	</tr>
+	<tr>
+		<td>Inventario Final Deseado</td>
+		#foreach( $producto in $presupuesto.productos  )
+			<td>$producto.inventarioFinalDeseado</td> 
+		#end
+	</tr>
+	<tr>
+		<td>Necesidad Total</td>
+		#foreach( $producto in $presupuesto.productos  )
+			<td>$producto.necesidadTotal</td> 
+		#end
+	</tr>
+	<tr>
+		<td>Inventario Inicial</td>
+		#foreach( $producto in $presupuesto.productos  )
+			<td>$producto.inventarioTotal</td> 
+		#end
+	</tr>
+	<tr>
+		<td>Unidades a Producir</td>
+		#foreach( $producto in $presupuesto.productos  )
+			<td>$producto.unidadesaProducir</td> 
+		#end
+	</tr>
+</table>

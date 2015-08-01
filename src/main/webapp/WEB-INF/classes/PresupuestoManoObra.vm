@@ -1,0 +1,25 @@
+<p>Presupuesto de Mano de Obra Directa</p>
+
+#foreach( $actividad in $presupuesto.lista )
+	<h1>$actividad.actividad.nombre</h1>
+	<table border="1">
+		<tr>
+			<th>Unidades a Producir</th> 
+			<th>Hora x Unidad</th> 
+			<th>Horas Totales</th> 
+			<th>Couta X Hora</th> 
+			<th>Importe</th> 
+		</tr>
+		#foreach( $producto in $actividad.costos)
+		<tr>
+			<td>$producto.producto.nombre</td>
+			<td>$producto.unidadesaProducir</td>
+			<td>$producto.horaxUnidad</td>
+			<td>$producto.horasTotales</td>
+			<td>$producto.cuota</td>
+			<td>$producto.importe</td>
+		</tr>
+		#end
+	</table>
+#end
+	
