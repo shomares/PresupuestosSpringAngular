@@ -15,7 +15,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +39,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 @Controller
+@Scope(value="session")
 public class PresupuestoController {
 
 	@Autowired
@@ -48,9 +52,10 @@ public class PresupuestoController {
 
 	@RequestMapping(value = "/Presupuesto/Calcular", method = RequestMethod.GET)
 	@ResponseBody
-	public Resultado<String> calcular(@RequestParam(value = "id", required = false) Integer id) {
+	public Resultado<String> calcular(@RequestParam(value = "id", required = false) Integer id, HttpSession sesion) {
 		Resultado<String> res = new Resultado<String>();
 		Thread th = new Thread(logica);
+		logica.setSessionID(sesion.getId());
 		logica.setEx(null);
 		if (!logica.isBusy()) {
 			th.start();

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.upiicsa</groupId>
 	<artifactId>presupuestos</artifactId>
-	<name>Presupuestos</name>
+	<name>PresupuestosV2</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -33,6 +33,7 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
@@ -52,6 +53,8 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+
+
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -136,6 +139,7 @@
 			<scope>test</scope>
 		</dependency>
 
+
 		<!--Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -209,8 +213,27 @@
 			<version>5.5.6</version>
 		</dependency>
 
-
-
+		<!-- Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
 
 
 	</dependencies>
@@ -252,6 +275,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 </project>

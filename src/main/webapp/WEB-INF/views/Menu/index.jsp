@@ -68,11 +68,15 @@ and open the template in the editor.
 			<ul class="right hide-on-med-and-down">
 				<li><a class="dropdown-button" href="#!"
 					data-activates="dropdown2">Configuracion</a></li>
+				<li><a class="dropdown-button" href="j_spring_security_logout">Salir</a></li>
 				<li><a class="dropdown-button" href="#!"
 					data-activates="dropdown1">Catalogos</a></li>
+
 				<li class="material-icons"><a href="<c:url value="/Menu" />"><img
 						src="<c:url value="/resources/img/ic_settings_backup_restore_white_36dp_1x.png" />"></a></li>
 			</ul>
+
+
 		</div>
 
 		<ul class="side-nav" id="mobile-demo">
@@ -90,6 +94,9 @@ and open the template in the editor.
 			<li><a href="<c:url value="/Actividad" />">Actividades</a></li>
 			<li><a href="<c:url value="/CostoActividad" />">Costo de
 					Actividades Por Producto</a></li>
+			<li><a href="../j_spring_security_logout">Salir</a></li>
+
+
 
 
 		</ul>

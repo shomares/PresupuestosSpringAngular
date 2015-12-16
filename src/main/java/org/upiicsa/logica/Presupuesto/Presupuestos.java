@@ -1,6 +1,5 @@
 package org.upiicsa.logica.Presupuesto;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,7 +11,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.velocity.Template;
@@ -28,8 +26,10 @@ public class Presupuestos implements Runnable {
 	private String actual;
 
 	private Exception ex;
+	private String path;
 	private String archivo;
-
+	private String sessionID;
+	
 	private List<IPresupuestoLogica> lista;
 	private boolean busy;
 
@@ -51,6 +51,16 @@ public class Presupuestos implements Runnable {
 
 	public void setEx(Exception ex) {
 		this.ex = ex;
+	}
+	
+	
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public Presupuestos() {
@@ -139,7 +149,7 @@ public class Presupuestos implements Runnable {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		Integer i = 0;
 		try {
-			String actual="C:\\Users\\walmart hp\\Desktop\\TEMP\\" + dateFormat.format(new Date());
+			String actual= path + this.sessionID +dateFormat.format(new Date());
 			synchronized (archivo) {
 				archivo = actual+ ".zip";
 			}
@@ -191,6 +201,14 @@ public class Presupuestos implements Runnable {
 	public boolean isBusy() {
 		// TODO Auto-generated method stub
 		return this.busy;
+	}
+
+	public String getSessionID() {
+		return sessionID;
+	}
+
+	public void setSessionID(String sessionID) {
+		this.sessionID = sessionID;
 	}
 
 }

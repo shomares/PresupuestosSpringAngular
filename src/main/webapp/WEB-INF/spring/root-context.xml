@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
-
-
-
-
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	
 	<!-- MYSQL -->
 	<bean name="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/Presupuesto" />
-		<property name="username" value="$username" />
-		<property name="password" value="$password" />
+		<property name="username" value="root" />
+		<property name="password" value="mysql" />
 	</bean>
 
 	<!-- MYSQL -->
@@ -108,14 +107,14 @@
 
 	<bean id="logicPresupuestoProduccion"
 		class="org.upiicsa.logica.Presupuesto.LogicPresupuestoProduccion"
-		scope="singleton">
+		scope="session">
 		<property name="daoProducto" ref="daoProducto"></property>
 		<property name="plantilla" value="PresupuestoProduccion.vm"></property>
 	</bean>
 
 	<bean id="logicPresupuestoConsumoMateriaPrima"
 		class="org.upiicsa.logica.Presupuesto.LogicPresupuestoConsumoMateriaPrima"
-		scope="singleton">
+		scope="session">
 		<property name="daoProducto" ref="daoProducto"></property>
 		<property name="daoPresupuesto" ref="daoHibernate"></property>
 		<property name="entrada" ref="logicPresupuestoProduccion"></property>
@@ -123,14 +122,14 @@
 	</bean>
 
 	<bean id="logicCompras" class="org.upiicsa.logica.Presupuesto.LogicPresupuestoCompras"
-		scope="singleton">
+		scope="session">
 		<property name="daoMateriaPrima" ref="daoMateriaPrima"></property>
 		<property name="consumoMateriaPrima" ref="logicPresupuestoConsumoMateriaPrima"></property>
 		<property name="plantilla" value="PresupuestoCompras.vm"></property>
 	</bean>
 	
 	<bean id="logicManoObra" class="org.upiicsa.logica.Presupuesto.LogicPresupuestoManoObra"
-		scope="singleton">
+		scope="session">
 		<property name="daoActividad" ref="daoActividad"></property>
 		<property name="daoProducto" ref="daoProducto"></property>
 		<property name="presupuestoProduccion" ref="logicPresupuestoProduccion"></property>
@@ -139,7 +138,7 @@
 
 	
 	<bean id="logicValuacionMateria" class="org.upiicsa.logica.Presupuesto.LogicValuacionMateria"
-		scope="singleton">
+		scope="session">
 		<property name="daoMateriaPrima" ref="daoMateriaPrima"></property>
 		<property name="consumoMateriaPrima" ref="logicPresupuestoConsumoMateriaPrima"></property>
 		<property name="plantilla" value="ValuacionMateria.vm"></property>
@@ -149,13 +148,13 @@
 	
 	<bean id="logicSecundario"
 		class="org.upiicsa.logica.Presupuesto.LogicaProrrateoSecundario"
-		scope="singleton">
+		scope="session">
 		<property name="daoActividad" ref="daoActividad"></property>
 		<property name="daoConfiguracion" ref="daoConfiguracion"></property>
 	</bean>
 	
 	<bean id="logicProrrateoFinal" class="org.upiicsa.logica.Presupuesto.LogicProrrateoFinal"
-		scope="singleton">
+		scope="session">
 		<property name="daoActividad" ref="daoActividad"></property>
 		<property name="manoObra" ref="logicManoObra"></property>
 		<property name="prorrateoSecundario" ref="logicSecundario"></property>
@@ -164,7 +163,7 @@
 
 	<bean id="logicCostoUnitarioProduccion"
 		class="org.upiicsa.logica.Presupuesto.LogicCostoUnitarioProduccion"
-		scope="singleton">
+		scope="session">
 		<property name="daoConfig" ref="daoConfiguracion"></property>
 		<property name="daoProducto" ref="daoProducto"></property>
 		<property name="manoObra" ref="logicManoObra"></property>
@@ -176,7 +175,7 @@
 
 
 	<bean id="logicaPresupuestoVenta" class="org.upiicsa.logica.Presupuesto.LogicaPresupuestoVenta"
-		scope="singleton">
+		scope="session">
 		<property name="daoProducto" ref="daoProducto"></property>
 		<property name="costoUnitario" ref="logicCostoUnitarioProduccion"></property>
 
@@ -184,13 +183,13 @@
 	</bean>
 	
 	<bean id="LogicaCostoVendido" class="org.upiicsa.logica.Presupuesto.LogicaPresupuestoCostoVendido"
-		scope="singleton">
+		scope="session">
 			<property name="plantilla" value="PresupuestoCostoVendido.vm"></property>
 	</bean>
 
 
 	<bean id="LogicaEstadoResultados" class="org.upiicsa.logica.Presupuesto.LogicaEstadoResultados"
-		scope="singleton">
+		scope="session">
 		<property name="daoConfiguracion" ref="daoConfiguracion"></property>
 		<property name="costoVendido" ref="LogicaCostoVendido"></property>
 		<property name="ventas" ref="logicaPresupuestoVenta"></property>
@@ -200,7 +199,7 @@
 
 
 	<bean id="logicaBalanceGeneral" class="org.upiicsa.logica.Presupuesto.LogicaBalanceGeneral"
-		scope="singleton">
+		scope="session">
 		<property name="daoBalanceGeneral" ref="daoBalanceGeneral"></property>
 		<property name="daoConfiguracion" ref="daoConfiguracion"></property>
 		<property name="daoMateriaPrima" ref="daoMateriaPrima"></property>
@@ -213,7 +212,8 @@
 		<property name="plantilla" value="BalanceGeneral.vm"></property>
 	</bean>	
 	<bean id="presupuesto" class="org.upiicsa.logica.Presupuesto.Presupuestos"
-		scope="singleton">
+		scope="session">
+		<property name="path" value="C:\\Users\\walmart hp\\Desktop\\TEMP\\"></property>
 		<property name="lista">
 			<list>
 				<ref bean="logicPresupuestoProduccion" />
@@ -237,6 +237,5 @@
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-
-
+		
 </beans>
