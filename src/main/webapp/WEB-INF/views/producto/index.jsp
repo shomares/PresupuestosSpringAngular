@@ -65,7 +65,6 @@ and open the template in the editor.
 
 			<button ng-click="nuevo()" class="btn">
 				Nuevo
-			
 			</button>
 		</div>
 
@@ -77,7 +76,7 @@ and open the template in the editor.
 				<th>Inventario Inicial</th>
 				<th>Inventario Final Deseado</th>
 				<th>Costo Inventario Inicial</th>
-				<th>Unidades</th>
+				<th>Pronostico Ventas</th>
 				<th>Editar</th>
 				<th>Borrar</th>
 				<th>Seleccionar</th>

@@ -38,13 +38,15 @@
 		<security:intercept-url pattern="/Menu*"
 			access="hasAnyRole('ROLE_ADMIN','ROLE_CONT', 'ROLE_CAP')" />		
 
+		<security:intercept-url pattern="/Usuario*"
+			access="hasAnyRole('ROLE_ADMIN')" />		
 
 
 		<!-- default-target-url: LA URL A LA QUE LOS ENVIA SI ENTRAN DIRECTAMENTE 
 			AL /login SIN PASAR POR UN URL PROTEGIDA -->
 		<security:form-login login-page="/login"
 			login-processing-url="/autentificar" username-parameter="email"
-			password-parameter="password" default-target-url="/blog/1"
+			password-parameter="password" default-target-url="/Menu"
 			authentication-failure-url="/login?errorLogin=true" />
 
 		<security:logout logout-url="/logout"

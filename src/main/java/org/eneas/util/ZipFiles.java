@@ -10,15 +10,16 @@ import java.util.zip.ZipOutputStream;
  
 public class ZipFiles {
      
-    private static List<String> filesListInDir = new ArrayList<String>();
+    private  List<String> filesListInDir = new ArrayList<String>();
  
     /**
      * This method zips the directory
      * @param dir
      * @param zipDirName
      */
-    public  static void zipDirectory(File dir, String zipDirName) {
+    public   void zipDirectory(File dir, String zipDirName) {
         try {
+        	filesListInDir.clear();
             populateFilesList(dir);
             //now zip files one by one
             //create ZipOutputStream to write to the zip file
@@ -51,7 +52,7 @@ public class ZipFiles {
      * @param dir
      * @throws IOException
      */
-    private static void populateFilesList(File dir) throws IOException {
+    private  void populateFilesList(File dir) throws IOException {
         File[] files = dir.listFiles();
         for(File file : files){
             if(file.isFile()) filesListInDir.add(file.getAbsolutePath());
@@ -64,7 +65,7 @@ public class ZipFiles {
      * @param file
      * @param zipFileName
      */
-    public static void zipSingleFile(File file, String zipFileName) {
+    public  void zipSingleFile(File file, String zipFileName) {
         try {
             //create ZipOutputStream to write to the zip file
             FileOutputStream fos = new FileOutputStream(zipFileName);

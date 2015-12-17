@@ -48,7 +48,7 @@ and open the template in the editor.
 					src="<c:url value="/resources/img/ic_view_headline_white_36dp_1x.png" />">
 			</i></a>
 			<ul class="right hide-on-med-and-down">
-				<li class="material-icons"><a href="<c:url value="/Menu" />">"<img
+				<li class="material-icons"><a href="<c:url value="/Menu" />"><img
 						src="<c:url value="/resources/img/ic_settings_backup_restore_white_36dp_1x.png" />"></a></li>
 			</ul>
 			<ul class="side-nav" id="mobile-demo">
@@ -80,8 +80,8 @@ and open the template in the editor.
 					<td>{{materiaPrima.nombre}}</td>
 					<td>{{materiaPrima.cantidadInventarioInicial}}</td>
 					<td>{{materiaPrima.cantidadInventarioFinal}}</td>
-					<td>{{materiaPrima.costoInicial|currency}}}</td>
-					<td>{{materiaPrima.costoPresupuestado|currency}}}</td>
+					<td>{{materiaPrima.costoInicial|currency}}</td>
+					<td>{{materiaPrima.costoPresupuestado|currency}}</td>
 					<td><a href="MateriaPrima/Editar?id={{materiaPrima.id}}">Editar</a></td>
 					<td><a href="#" ng-click="eliminar({{materiaPrima.id}})">Eliminar</a></td>
 					<td><input type="checkbox" class="filled-in"

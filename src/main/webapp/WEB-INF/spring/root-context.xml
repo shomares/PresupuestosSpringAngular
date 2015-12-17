@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	
-	
+
+
 	<!-- MYSQL -->
 	<bean name="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -104,6 +103,12 @@
 		<property name="session" ref="sessionFactory"></property>
 	</bean>
 
+	<bean id="daoUsuarios" class="org.upiicsa.dao.Hibernate.DaoHibernate">
+		<constructor-arg>
+			<value type="java.lang.Class">org.upiicsa.dao.entidades.Usuarios</value>
+		</constructor-arg>
+		<property name="session" ref="sessionFactory"></property>
+	</bean>
 
 	<bean id="logicPresupuestoProduccion"
 		class="org.upiicsa.logica.Presupuesto.LogicPresupuestoProduccion"
@@ -127,7 +132,7 @@
 		<property name="consumoMateriaPrima" ref="logicPresupuestoConsumoMateriaPrima"></property>
 		<property name="plantilla" value="PresupuestoCompras.vm"></property>
 	</bean>
-	
+
 	<bean id="logicManoObra" class="org.upiicsa.logica.Presupuesto.LogicPresupuestoManoObra"
 		scope="session">
 		<property name="daoActividad" ref="daoActividad"></property>
@@ -136,23 +141,23 @@
 		<property name="plantilla" value="PresupuestoManoObra.vm"></property>
 	</bean>
 
-	
+
 	<bean id="logicValuacionMateria" class="org.upiicsa.logica.Presupuesto.LogicValuacionMateria"
 		scope="session">
 		<property name="daoMateriaPrima" ref="daoMateriaPrima"></property>
 		<property name="consumoMateriaPrima" ref="logicPresupuestoConsumoMateriaPrima"></property>
 		<property name="plantilla" value="ValuacionMateria.vm"></property>
 	</bean>
-	
-	
-	
+
+
+
 	<bean id="logicSecundario"
 		class="org.upiicsa.logica.Presupuesto.LogicaProrrateoSecundario"
 		scope="session">
 		<property name="daoActividad" ref="daoActividad"></property>
 		<property name="daoConfiguracion" ref="daoConfiguracion"></property>
 	</bean>
-	
+
 	<bean id="logicProrrateoFinal" class="org.upiicsa.logica.Presupuesto.LogicProrrateoFinal"
 		scope="session">
 		<property name="daoActividad" ref="daoActividad"></property>
@@ -181,10 +186,11 @@
 
 		<property name="plantilla" value="PresupuestoVenta.vm"></property>
 	</bean>
-	
-	<bean id="LogicaCostoVendido" class="org.upiicsa.logica.Presupuesto.LogicaPresupuestoCostoVendido"
+
+	<bean id="LogicaCostoVendido"
+		class="org.upiicsa.logica.Presupuesto.LogicaPresupuestoCostoVendido"
 		scope="session">
-			<property name="plantilla" value="PresupuestoCostoVendido.vm"></property>
+		<property name="plantilla" value="PresupuestoCostoVendido.vm"></property>
 	</bean>
 
 
@@ -210,9 +216,10 @@
 		<property name="logicPresupuestoManoObra" ref="logicManoObra"></property>
 		<property name="logicProrrateoFinal" ref="logicProrrateoFinal"></property>
 		<property name="plantilla" value="BalanceGeneral.vm"></property>
-	</bean>	
+	</bean>
 	<bean id="presupuesto" class="org.upiicsa.logica.Presupuesto.Presupuestos"
 		scope="session">
+		<property name="separador" value="\\"></property>
 		<property name="path" value="C:\\Users\\walmart hp\\Desktop\\TEMP\\"></property>
 		<property name="lista">
 			<list>
@@ -224,11 +231,10 @@
 				<ref bean="logicProrrateoFinal" />
 				<ref bean="logicCostoUnitarioProduccion" />
 				<ref bean="logicaPresupuestoVenta" />
-			
-				<ref bean="LogicaCostoVendido" />
-				<ref bean="LogicaEstadoResultados" />
-				<ref bean="logicaBalanceGeneral" />
 
+				<ref bean="LogicaCostoVendido" />
+				<!-- <ref bean="LogicaEstadoResultados" /> <ref bean="logicaBalanceGeneral" 
+					/> -->
 
 			</list>
 		</property>
@@ -237,5 +243,5 @@
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-		
+
 </beans>

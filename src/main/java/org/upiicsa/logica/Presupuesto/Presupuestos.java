@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.velocity.Template;
@@ -29,7 +30,16 @@ public class Presupuestos implements Runnable {
 	private String path;
 	private String archivo;
 	private String sessionID;
+	private String separador;
 	
+	public String getSeparador() {
+		return separador;
+	}
+
+	public void setSeparador(String separador) {
+		this.separador = separador;
+	}
+
 	private List<IPresupuestoLogica> lista;
 	private boolean busy;
 
@@ -137,17 +147,16 @@ public class Presupuestos implements Runnable {
 
 			}
 			generaPDF();
-			this.busy = false;
 		} catch (Exception ex) {
-			this.ex = ex;
 			this.busy = false;
+			generaPDF();
+			
 		}
 
 	}
 
 	public void generaPDF() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-		Integer i = 0;
 		try {
 			String actual= path + this.sessionID +dateFormat.format(new Date());
 			synchronized (archivo) {
@@ -157,28 +166,32 @@ public class Presupuestos implements Runnable {
 			PrintWriter out = null;
 			String carpetaT = actual;
 			File carpeta = new File(carpetaT);
-			FileOutputStream f;
 			ZipOutputStream zip = null;
 
 			if (!carpeta.exists())
 				carpeta.mkdirs();
 
 			try {
-				for (String aux : this.getSalida().values()) {
-					String filep = carpetaT + "\\" + "presupuesto" + i + ".html";
+				Set<String>  keys= this.salida.keySet();
+				for (String key : keys) {
+					String aux= this.getSalida().get(key);
+					String filep = carpetaT + separador + key+ ".html";
 					File archivo = new File(filep);
-					if (!archivo.exists())
-						archivo.createNewFile();
+					if (archivo.exists())
+						archivo.delete();
+					archivo.createNewFile();
 					out = new PrintWriter(filep);
 					out.println(aux);
 					out.close();
-					i++;
 				}
-				ZipFiles.zipDirectory(carpeta, archivo);
-
+				ZipFiles nz= new ZipFiles();
+				nz.zipDirectory(carpeta, archivo);
+				this.busy = false;
 			} catch (IOException e) {
 				// System.err.println("error is: "+e.getMessage());
-				e.printStackTrace(); // *** this is more informative ***
+				 this.ex= e;// *** this is more informative ***
+					this.busy = false;
+					
 			} finally {
 				if (out != null) {
 					out.close(); // **** closing it flushes it and reclaims
@@ -189,8 +202,11 @@ public class Presupuestos implements Runnable {
 					out.close();
 			}
 		} catch (Exception ex) {
-
+			this.ex= ex;
+			this.busy = false;
+			
 		}
+this.busy= false;
 
 	}
 

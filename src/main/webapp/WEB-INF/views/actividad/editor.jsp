@@ -46,7 +46,7 @@ and open the template in the editor.
 
 			</i></a>
 			<ul class="right hide-on-med-and-down">
-				<li class="material-icons"><a href="<c:url value="/Menu" />">"<img
+				<li class="material-icons"><a href="<c:url value="/Menu" />"><img
 						src="<c:url value="/resources/img/ic_settings_backup_restore_white_36dp_1x.png" />"></a></li>
 			</ul>
 			<ul class="side-nav" id="mobile-demo">

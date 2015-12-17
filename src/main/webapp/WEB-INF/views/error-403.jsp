@@ -107,19 +107,7 @@ and open the template in the editor.
 	</nav>
 
 	<div class="container">
-		<div class="container">
-			<br> <br>
-			<div class="row center">
-				<img src="<c:url value="/resources/img/presupuesto.jpg" />">
-			</div>
-			<div class="row center">
-				<a href="<c:url value="/Presupuesto" />" id="download-button"
-					class="btn-large waves-effect waves-light ">Calcular</a>
-			</div>
-			<br> <br>
-
-		</div>
-
+		<h1>Acceso Denegado</h1>
 	</div>
 	<script
 		src="<c:url value="/resources/js/controladores/presupuesto/ctrlActividad.js" />"></script>

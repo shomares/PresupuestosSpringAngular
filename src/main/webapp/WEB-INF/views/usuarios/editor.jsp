@@ -21,23 +21,24 @@ and open the template in the editor.
 <link href="<c:url value="/resources/css/alertify.rtl.css"/>"
 	rel="stylesheet">
 
+<link href="<c:url value="/resources/materialize/css/materialize.css"/>"
+	rel="stylesheet">
+
+
 <!-- Librerias Script-->
 <script src="<c:url value="/resources/js/libs/jquery/jquery.js" />"></script>
 <script src="<c:url value="/resources/js/libs/Eventos.js" />"></script>
 <script src="<c:url value="/resources/js/libs/angular.js/angular.js" />"></script>
 <script src="<c:url value="/resources/js/dao/DaoGeneral.js" />"></script>
 <script src="<c:url value="/resources/js/libs/jquery/Extentions.js" />"></script>
-<link href="<c:url value="/resources/materialize/css/materialize.css"/>"
-	rel="stylesheet">
-
 
 <script
 	src="<c:url value="/resources/js/libs/alertify.js/alertify.min.js" />"></script>
 
 </head>
-<body ng-app="presupuestos" ng-controller="ctrlNuevoCostoActividad">
+<body ng-app="presupuestos" ng-controller="ctrlUsuarioNuevo">
 	<nav>
-		<div class="nav-wrapper blue darken-1 blue darken-1 blue darken-1 blue darken-1">
+		<div class="nav-wrapper blue darken-1">
 			<a href="#!" class="brand-logo"> AccountLink JS</a> <a href="#"
 				data-activates="mobile-demo" class="button-collapse"><i
 				class="material-icons"> <img
@@ -49,43 +50,53 @@ and open the template in the editor.
 						src="<c:url value="/resources/img/ic_settings_backup_restore_white_36dp_1x.png" />"></a></li>
 			</ul>
 			<ul class="side-nav" id="mobile-demo">
-				<li><a href="<c:url value="/CostoActividad" />">Regresar</a></li>
+				<li><a href="<c:url value="/Usuario" />">Regresar</a></li>
 			</ul>
 		</div>
 	</nav>
 
 	<div class="container">
 		<header>
-			<h1>Costo Actividad</h1>
+			<h1>Usuarios</h1>
 		</header>
-
-		<p>Actividad:</p>
-		{{objeto.actividad}}
-
 		<form ng-submit="enviar()">
+			<fieldset>
+				<legend>Nuevo</legend>
+				<p>
+					<label>Username: </label><br> <input type="text"
+						ng-model="objeto.email" required autofocus>
+				</p>
+				<p>
+					<label>Contraseña: </label><br> <input type="password"
+						step="1.00" ng-model="objeto.password" required autofocus
+						class="validate">
+				</p>
+				<p>
+					<label>Rol: </label><br>
+				<p>
+					<select  class="browser-default" ng-model="objeto.rol">
+						<option value="ROLE_ADMIN">Administrador</option>
+						<option value="ROLE_CAP">Capturista</option>
+						<option value="ROLE_CONT">Contador</option>
+					</select>
 
-			<p
-				ng-repeat="costoActividad in objeto.costoActividadAux track by $index">
-				<label class=""><b>{{costoActividad.producto}}:</b></label><br>
-				<label>Couta:</label> <input type="number" step="1.00"
-					ng-model="costoActividad.couta" required autofocus> <br>
-				<label>Horas:</label><input type="number" step="1.00"
-					ng-model="costoActividad.horas" required autofocus> <br>
-			</p>
+				</p>
+
+			</fieldset>
 			<input type="submit" value="Enviar" ng-click="enviar"
-				class="btn btn-info">
-
+				class="btn btn-info"><input type="reset" value="Limpiar"
+				ng-click="enviar" class="btn btn-info">
 		</form>
-
-		<script
-			src="<c:url value="/resources/materialize/js/materialize.js" />"></script>
-		<script>
-			$(".button-collapse").sideNav();
-		</script>
 
 	</div>
 	<script
-		src="<c:url value="/resources/js/controladores/presupuesto/ctrlCostoActividad.js" />"></script>
+		src="<c:url value="/resources/js/controladores/presupuesto/ctrlUsuario.js" />"></script>
+	<script
+		src="<c:url value="/resources/materialize/js/materialize.js" />"></script>
+	<script>
+		$(".button-collapse").sideNav();
+	</script>
+
 
 </body>
 

@@ -57,7 +57,7 @@ and open the template in the editor.
 		<header>
 			<h3>Editar</h3>
 		</header>
-	<	<br>
+		<br>
 		<table ng-init="getAll()" class="bordered">
 			<tr>
 				<th>Nombre</th>
